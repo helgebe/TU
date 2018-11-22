@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<script>
+article();
+function article(){
+  var article_id = location.search.split('id=')[1];
+  var xhr = new XMLHttpRequest();
+  xhr.responseType = "json";
+  xhr.open("GET", "articles.php?id=" + article_id );
+  xhr.onload = function(){
+    data = xhr.response[0];
+    console.log(data.heading);
+    var article = document.createElement('div');
+      article.innerHTML +=
+      "<div class='articleouter'><img class='articleimage_big' src='img_600_400.jpg'></img>" +
+                "<img class='articleimage_small' src='img_200_150.jpg'></img>"+
+                "<div class='text'><h3 class='heading'>" + data.heading +
+                "</h3><p class='sub_heading'>" + data.preamble + "</div></div>";
+
+  document.body.appendChild(article);
+  }
+  xhr.send();
+
+}
+</script>
+</body>
+</html>
